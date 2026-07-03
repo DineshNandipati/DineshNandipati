@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Custom Neo-Brutalist Transitions & Animation Utilities */
+.btn-transition {
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Bouncing contact button animation */
+@keyframes custom-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+  }
+  50% {
+    transform: translateY(-8px);
+    box-shadow: 6px 14px 0px 0px rgba(0, 0, 0, 1);
+  }
+}
+
+.animate-btn-bounce {
+  animation: custom-bounce 2s infinite ease-in-out;
+}
+
+/* Clean Custom Scrollbar matching style */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #F1D65C;
+  border: 3px solid #000000;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00D9FF;
+}
