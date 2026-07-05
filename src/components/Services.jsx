@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import ServiceCard from './ServiceCard';
 import pranay from '../assets/pp.png';
 import praneeth from '../assets/1ph.jpg';
 import mouli from '../assets/1m.jpg';
+import movie from '../assets/rukku.jpg';
+import real from '../assets/real.jpg';
+import seminar from '../assets/seminar.png';
+import reels from '../assets/reels.jpeg';
 
 const Services = () => {
   const serviceData = [
@@ -25,11 +29,37 @@ const Services = () => {
       title: 'Mouli Talks',
       bgImage: mouli ,
       work: "https://drive.google.com/drive/folders/16kcSr3XP1Cn21AzPo5CNS04wHE_oaqCf"
+    },
+    {
+      number: 4,
+      title: 'Real Estate',
+      bgImage: real,
+      work: "https://drive.google.com/drive/folders/1VeSvuO2tOPYzeqf0hogDex8OCGbp5rTw?usp=sharing"
+    },
+    {
+      number: 5,
+      title: 'Movie Edits',
+      bgImage: movie ,
+      work: "https://drive.google.com/drive/folders/1TzKVGu6VB8T1J2p2vUogHUAGygcf53rO?usp=sharing"
+    },
+    {
+      number: 6,
+      title: 'Editing Seminar',
+      bgImage: seminar ,
+      work: "https://drive.google.com/drive/folders/170ujRRcB117_rDUHKCPQegh3XTQwL7BT?usp=sharing"
+    },
+    {
+      number: 7,
+      title: 'Reels Editing',
+      bgImage: reels ,
+      work: "https://drive.google.com/drive/folders/1fKXJKcRduO7vCiuPdmuVF9gsDCnAkMvt?usp=sharing"
     }
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
+  const containerRef = useRef(null);
+  const isMobile = visibleCards === 1;
 
   // Dynamically calculate visible cards count based on screen width
   useEffect(() => {
@@ -49,7 +79,9 @@ const Services = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const maxIndex = serviceData.length - visibleCards;
+  // Page-by-page calculations
+  const totalPages = Math.ceil(serviceData.length / visibleCards);
+  const maxIndex = totalPages - 1;
   
   // Ensure current index is always within safe boundaries if screen size changes
   const safeIndex = Math.min(currentIndex, maxIndex >= 0 ? maxIndex : 0);
@@ -60,6 +92,32 @@ const Services = () => {
 
   const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1 > maxIndex ? 0 : prev + 1));
+  };
+
+  // Scroll to active index on mobile view
+  useEffect(() => {
+    if (isMobile && containerRef.current) {
+      const width = containerRef.current.clientWidth;
+      const targetScrollLeft = currentIndex * width;
+      if (Math.abs(containerRef.current.scrollLeft - targetScrollLeft) > 10) {
+        containerRef.current.scrollTo({
+          left: targetScrollLeft,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [currentIndex, isMobile]);
+
+  // Handle manual scroll swipe on mobile view
+  const handleScroll = (e) => {
+    if (!isMobile) return;
+    const scrollLeft = e.currentTarget.scrollLeft;
+    const width = e.currentTarget.clientWidth;
+    if (width === 0) return;
+    const newIndex = Math.round(scrollLeft / width);
+    if (newIndex !== currentIndex && newIndex >= 0 && newIndex <= maxIndex) {
+      setCurrentIndex(newIndex);
+    }
   };
 
   return (
@@ -90,19 +148,29 @@ const Services = () => {
         {/* Carousel Container */}
         <div className="relative w-full mx-auto">
           
-          {/* Viewport for hiding overflow */}
-          <div className="overflow-hidden w-full -mx-4 px-4 py-8">
+          {/* Viewport for hiding overflow / scroll on mobile */}
+          <div 
+            ref={containerRef}
+            onScroll={handleScroll}
+            className={`w-full -mx-4 px-4 py-8 ${
+              isMobile 
+                ? 'overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth' 
+                : 'overflow-hidden'
+            }`}
+          >
             <div 
               className="flex transition-transform duration-500 ease-out"
               style={{ 
-                transform: `translate3d(-${safeIndex * (100 / visibleCards)}%, 0, 0)`,
+                transform: isMobile 
+                  ? 'none' 
+                  : `translate3d(-${safeIndex * (visibleCards / serviceData.length) * 100}%, 0, 0)`,
                 width: `${(serviceData.length / visibleCards) * 100}%` 
               }}
             >
               {serviceData.map((service) => (
                 <div 
                   key={service.number} 
-                  className="px-4"
+                  className={`px-4 ${isMobile ? 'shrink-0 snap-center' : ''}`}
                   style={{ width: `${100 / serviceData.length}%` }}
                 >
                   <ServiceCard 
@@ -110,12 +178,6 @@ const Services = () => {
                     title={service.title}
                     bgImage={service.bgImage}
                     work={service.work}
-                    // onLearnMore={() => {
-                    //   const contactSection = document.getElementById('contact');
-                    //   if (contactSection) {
-                    //     contactSection.scrollIntoView({ behavior: 'smooth' });
-                    //   }
-                    // }}
                   />
                 </div>
               ))}
@@ -123,7 +185,7 @@ const Services = () => {
           </div>
 
           {/* Navigation Controls (Arrows & Dots) */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-8">
+          <div className="hidden lg-tablet:flex lg-tablet:flex-row items-center justify-center gap-6 mt-8">
             {/* Prev Button */}
             <button
               onClick={handlePrev}

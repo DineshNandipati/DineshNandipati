@@ -14,7 +14,7 @@ const ServiceCard = ({ number, title, bgImage, work }) => {
       style={{backgroundImage: `url(${bgImage})`, backgroundRepeat:'no-repeat',backgroundPosition:'center', backgroundSize:'cover'}}
     >
       {/* Floating Large name Badge */}
-      <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-80 h-8 bg-[#15D08A] text-white border-[4px] border-black rounded-[10px] flex items-center justify-center font-black text-2xl shadow-[3px_3px_0px_#000] select-none group-hover:scale-115 transition-transform duration-200">
+      <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-[90%] h-10 lg-tablet:h-12 bg-[#15D08A] text-white border-[3px] lg-tablet:border-[4px] border-black rounded-[10px] flex items-center justify-center font-black text-base lg-tablet:text-xl lg-laptop:text-2xl shadow-[3px_3px_0px_#000] select-none group-hover:scale-105 transition-all duration-200 px-2 whitespace-nowrap overflow-hidden text-ellipsis">
         {title}
       </div>
 

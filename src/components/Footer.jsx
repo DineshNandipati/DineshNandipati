@@ -13,7 +13,7 @@ const Footer = () => {
   return (
     <footer 
       id="footer" 
-      className="bg-[#F1D65C] text-black pt-16 pb-8 px-4 lg-tablet:px-8 border-t-[4px] border-black flex flex-col items-center gap-10"
+      className="bg-[#15D08A] text-black pt-16 pb-8 px-4 lg-tablet:px-8 border-t-[4px] border-black flex flex-col items-center gap-10"
     >
       {/* 1. Branding: Circular Logo + Name */}
       <div className="flex items-center gap-4">
