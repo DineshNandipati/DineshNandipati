@@ -138,6 +138,9 @@ const Services = () => {
           <h2 className="text-4xl lg-tablet:text-5xl lg-laptop:text-6xl font-black mb-6">
             Portfolio
           </h2>
+          <p className="block lg-tablet:hidden text-sm font-bold tracking-wider uppercase text-black/60 animate-pulse mt-[-8px]">
+            ← Scroll / Swipe to view more →
+          </p>
           {/* <p className="max-w-3xl mx-auto text-sm lg-tablet:text-base lg-laptop:text-lg font-semibold leading-relaxed text-black">
             Embark on a journey of digital transformation with services that blend design
             brilliance with cutting-edge development. Let's create experiences that resonate and
