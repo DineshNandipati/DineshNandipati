@@ -1,15 +1,9 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import Button from './Button';
 
 const ServiceCard = ({ number, title, bgImage, work }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      whileHover={{ y: -6, shadow: '12px 12px 0px rgba(0,0,0,1)' }}
+    <div
       className="relative bg-[#A95CFF] border-[4px] border-black rounded-3xl p-8 pt-12 text-center flex flex-col items-center justify-between shadow-[8px_8px_0px_rgba(0,0,0,1)] transition-all duration-300 group min-h-[360px]"
       style={{backgroundImage: `url(${bgImage})`, backgroundRepeat:'no-repeat',backgroundPosition:'center', backgroundSize:'cover'}}
     >
@@ -36,7 +30,7 @@ const ServiceCard = ({ number, title, bgImage, work }) => {
       >
         See Work
       </Button>
-    </motion.div>
+    </div>
   );
 };
 
